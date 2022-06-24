@@ -35,7 +35,7 @@ l_m_site_xy <- map(1:3, function(i){
   l_myrcia_phy_site_xy[[i]] %>% filter(l_keep_site_3sp[[i]])
 })
 
-write.csv(l_m_site_xy[[3]], here("data", "W_comp.csv"), row.names = F)
+write.csv(l_m_site_xy[[3]], here("data", "W_xy.csv"), row.names = F)
 
 # |- phylogeny ----
 myrcia_tree_consensus <- read.tree(

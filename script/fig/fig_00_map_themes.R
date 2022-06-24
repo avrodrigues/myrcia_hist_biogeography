@@ -81,3 +81,16 @@ theme_map_continuous <- list(
   )
 )
 
+
+theme_evoregions <- list(
+  theme(
+    panel.background = element_rect(fill = bg), 
+    panel.grid = element_blank(), 
+    text = element_text(color = greys[1]), 
+    title = element_text(color = greys[2]),
+    axis.text = element_text(color = greys[2]), 
+    axis.ticks = element_line(color = greys[3]), 
+    panel.border = element_rect(color = greys[4], fill = NA), 
+    axis.title = element_blank()
+  )
+)
