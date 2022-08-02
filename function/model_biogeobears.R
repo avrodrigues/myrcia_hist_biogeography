@@ -1,8 +1,8 @@
-#model_biogeobears
-phy.path <-  here("data/phylogeny/phy_cleaned/000_phy_myrcia_cleaned_consensus.new")
-geog.path <- here("output/biogeobears/spp_area/000_areas_myrcia_phy_consensus.data")
-max_range_size = 4
-num_cores_to_use = 3
+# #model_biogeobears
+# phy.path <-  here("data/phylogeny/phy_cleaned/000_phy_myrcia_cleaned_consensus.new")
+# geog.path <- here("output/biogeobears/spp_area/000_areas_myrcia_phy_consensus.data")
+# max_range_size = 4
+# num_cores_to_use = 3
 
 
 model_biogeobears <- function(
