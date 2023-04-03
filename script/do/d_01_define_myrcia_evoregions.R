@@ -4,38 +4,17 @@
 library(tidyverse)
 library(here)
 library(ape)
+library(furrr)
+library(Herodotools)
 
-source(here("function", "evoregions.R"))
+source(here("function", "evoregions2.R"))
 
 # load data ---------------------------------------------------------------
 
-# |- distribution ----
+# |- composition ----
+comp_W <- read.csv(here("data", "W.csv"))
+site_xy <-  read.csv(here("data", "W_xy.csv"))
 
-l_myrcia_phy_site_xy <- read_rds( 
-  here("data", "distribution", "list_myrcia_phy_site_xy.rds")
-)
-
-l_myrcia_phy_comp <- read_rds(
-  here("data", "distribution", "list_myrcia_phy_comp.rds")
-)
-
-# keep only sites with more than 2 species
-l_keep_site_3sp <- map(l_myrcia_phy_comp, function(x){
-  rowSums(x) >= 3
-})
-  
-
-l_m_comp <- map(1:3, function(i){
-  l_myrcia_phy_comp[[i]] %>% filter(l_keep_site_3sp[[i]])
-})
-
-write.csv(l_m_comp[[3]], here("data", "W.csv"), row.names = F)
-
-l_m_site_xy <- map(1:3, function(i){
-  l_myrcia_phy_site_xy[[i]] %>% filter(l_keep_site_3sp[[i]])
-})
-
-write.csv(l_m_site_xy[[3]], here("data", "W_xy.csv"), row.names = F)
 
 # |- phylogeny ----
 myrcia_tree_consensus <- read.tree(
@@ -46,53 +25,71 @@ myrcia_tree_consensus <- read.tree(
     "000_phy_myrcia_cleaned_consensus.new")
 )
 
-l_phy_files <- list.files(
-  here("data", "phylogeny","phy_cleaned"), full.names = T
-  )[-1]
+# l_phy_files <- list.files(
+#   here("data", "phylogeny","phy_cleaned"), full.names = T
+#   )[-1]
 
-
-myrcia_tree_200 <- l_phy_files %>% map(read.tree)
+# myrcia_tree_200 <- l_phy_files %>% map(read.tree)
 
 
 # evoregions ----------------------------------------------------------
 
+
+pcps_res <- PCPS::pcps(comp_W, cophenetic(myrcia_tree_consensus))
+num_axis <- sum(pcps_res$values$Relative_eig > 0.05)
+pcps_vectors <- pcps_res$vectors
+
+
+n_max_evoreg <- find_max_nclust(
+  pcps_vectors, 
+  threshold = num_axis, 
+  nperm = 1000,
+  max.nclust = c(8, 10, 12, 14),
+  subset = round(nrow(pcps_vectors)*0.1),
+  confidence.level = 0.95
+  )
+
 #|- consensus phylogeny ----
-l_evo_consensus <- map(
-  1:3, function(i){
-    evo <- evoregions(
-      l_m_comp[[i]], 
-      myrcia_tree_consensus, 
-      max.n.clust = 10
-    )
-    
-    cat(paste("evoregion comp mtx", i), fill = T)
-    return(evo)
-  }
+l_evo_consensus <- evoregions(
+  comp_W, 
+  myrcia_tree_consensus, 
+  max.n.clust = 8
 )
-  
-names(l_evo_consensus) <- names(l_myrcia_phy_site_xy)
+
 
 save_dir_evo_consensus <- here("output", "evoregion", "phy_consensus")
+save_file <- paste0("res_evoregion_phy_consensus.rds")
 
-for(i in seq_along(l_evo_consensus)) {
-  save_file <- paste0("res_evoregion_", names(l_evo_consensus)[i], ".rds")
+saveRDS(l_evo_consensus, here(save_dir_evo_consensus, save_file))
   
-  saveRDS(l_evo_consensus[[i]], here(save_dir_evo_consensus, save_file))
-  
-}
-
-#|- 200 phylogenies (posterior sampling) ----
-evo_200 <- map(
-  seq_along(myrcia_tree_200), 
-  function(i){
-    evo <-  evoregions(
-      l_m_comp[[3]], 
-      myrcia_tree_200[[i]], 
-      max.n.clust = 10
-    )
-    
-    cat(paste("evoregion phy", i), fill = T)
-    return(evo)
-  }
-)
-
+# #|- 200 phylogenies (posterior sampling) ----
+# 
+# 
+# 
+# cent <- rep(0:2, each = 100)[1:201]
+# dec <- rep(rep(0:9, each = 10), 3)[1:201]
+# unid <- rep(0:9, 21)[1:201]
+# 
+# um200 <- paste0(cent, dec, unid)[-1]
+# 
+# save_dir_evo_200 <- here("output", "evoregion", "phy_200")
+# 
+# plan(multisession, workers = 2)
+# 
+# furrr::future_map(
+#   seq_along(myrcia_tree_200), 
+#   function(i){
+#     
+#     evo <-  evoregions2(
+#       comp_W, 
+#       method.clust = "ward",
+#       myrcia_tree_200[[i]], 
+#       max.n.clust = 10
+#     )
+#     
+#     file_name <- paste0("res_evoregion_phy_", um200[i], ".rds")
+#     
+#     saveRDS(evo, here(save_dir_evo_200, file_name))
+#   }
+# )
+# 

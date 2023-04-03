@@ -7,8 +7,8 @@ library(tidyverse)
 
 # load data ---------------------------------------------------------------
 
-l_myrcia_binary_df <- read_rds(
-  here("data", "distribution", "list_myrcia_binary_df_05_degree.rds")
+myrcia_binary_df <- read.csv(
+  here("data", "distribution", "myrcia_binary_df_05_degree.csv")
 )
 
 myrcia_tree_consensus <- read.tree(
@@ -24,50 +24,39 @@ myrcia_tree_consensus <- read.tree(
 
 phy_species <- myrcia_tree_consensus$tip.label
 
-l_myrcia_dist_phy <- map(
-  l_myrcia_binary_df, function(x){
-    
-    x %>% 
+myrcia_phy_long_format <- 
+  myrcia_binary_df %>% 
       filter(species %in% phy_species) 
     
-})
-
-
-l_myrcia_dist_phy_wide <- map(
-  l_myrcia_dist_phy, function(x){
-    
-    x %>% 
+myrcia_phy_wide <- myrcia_phy_long_format %>% 
       pivot_wider(
         names_from = species, 
         values_from = presence, 
         values_fill = 0
       )
-  }
-)
 
+myrcia_phy_site_xy <- myrcia_phy_wide[,1:2]
 
-l_myrcia_phy_site_xy <- map(
-  l_myrcia_dist_phy_wide, function(x) x[,1:2]
-  )
-l_myrcia_phy_comp <-  map(
-  l_myrcia_dist_phy_wide, function(x) x[,-c(1:2)]
-)
+myrcia_phy_comp <- myrcia_phy_wide[,-c(1:2)]
 
 # save data ---------------------------------------------------------------
 
 
-write_rds(
-  l_myrcia_dist_phy, 
-  here("data", "distribution", "list_myrcia_dist_phy.rds")
+write.csv(
+  myrcia_phy_long_format, 
+  here("data", "distribution", "myrcia_phy_long_format.csv"), 
+  row.names = F
 )
 
-write_rds(
-  l_myrcia_phy_site_xy, 
-  here("data", "distribution", "list_myrcia_phy_site_xy.rds")
+write.csv(
+  myrcia_phy_site_xy, 
+  here("data", "distribution", "myrcia_phy_site_xy.csv"), 
+  row.names = F
 )
 
-write_rds(
- l_myrcia_phy_comp, 
-  here("data", "distribution", "list_myrcia_phy_comp.rds")
+write.csv(
+  myrcia_phy_comp, 
+  here("data", "distribution", "myrcia_phy_comp.csv"), 
+  row.names = F
 )
 

@@ -41,10 +41,11 @@ l_biogeo_mod$table_AICc %>%
   dplyr::arrange(AICc) %>% 
   mutate(delta_AICc =  AICc - min(AICc))
 
+max_range_size = 2
 # |- areas for nodes ----
 areas_node <- 
   get_node_range_BioGeoBEARS(
-    l_biogeo_mod$resBAYAREALIKEj,
+    l_biogeo_mod$resDECj,
     geog.path,
     myrcia_tree,
     max_range_size
@@ -52,29 +53,6 @@ areas_node <-
 
 # Figure -----------------------------------------------------
 
-# |- set range colors ----
-
-range_cols  <- 
-  c( 
-    "A" = "#37396C",
-    "AB" = "#496B8E",
-    "B" = "#58A0A9", 
-    
-    "ABCE" = "#72934A",
-    "BCE" = "#9FC077",
-    "CE" = "#FFB545",
-    "C" = "#D3A838",
-    
-    "AE" = "#8F348A",
-    "ABE" = "#B459AF",
-    "BE" =  "#E589B6",
-    
-    "ABDE" = "#734358",
-    "BDE" =  "#855573",
-    
-    "DE" = "#8F2400",
-    "E" = "#CD3B2E"
-  )
 
 # |- prepare phy data for plot ----
 fig_tree <- ggtree(myrcia_tree)
@@ -98,7 +76,30 @@ tree_df <- tree_df %>%
     })
   )
 
-g <-
+# |- set range colors ----
+unique(tree_df$area)
+
+range_cols  <- 
+  c( 
+    "A" = "#37396C",
+    "B" = "#58A0A9", 
+    "C" = "#D3A838",
+    "D" = "#362401",
+    "E" = "#BB4455",
+    
+    "AB" = "#5A7C9F",
+    #"ABC" = "#3B975D",
+    #"AC" = "#4D7D38",
+    "BC" =  "#3B975D",
+    #"BCD" = "#75794B",
+    #"BCE" = "#E4938F",
+    
+    "W" = "grey50"
+  )
+
+#show_colors(range_cols)
+
+(g <-
   ggtree(
     tree_df, 
     layout = "rect",
@@ -140,12 +141,13 @@ g <-
       size = 18
     )
   ) 
+)
 
 ggsave(
   "output/fig/03_anc_rec_phy_consensus.png",
   g , 
   width = 10, 
-  height = 16
+  height = 15.8
 ) 
 
 

@@ -96,19 +96,29 @@ greys <- c(
   "#FEFEFA"
 )
 
+
 my_theme <- list(
   theme(
-    panel.background = element_rect(fill = "#FAF8F4"), 
+    plot.background = element_rect(fill = "transparent", color = NA), #"#FAF8F4"), 
+    panel.background = element_rect(fill = "transparent", color = NA), #"#FAF8F4"), 
     panel.grid = element_blank(), 
     text = element_text(color = greys[1]), 
     plot.title = element_markdown(color = greys[2]),
-    axis.text = element_text(color = greys[2]), 
-    axis.ticks = element_line(color = greys[3]), 
-    panel.border = element_rect(color = greys[4], fill = NA), 
+    axis.text = element_blank(), #element_text(color = greys[2]), 
+    axis.ticks = element_blank(), #element_line(color = greys[3]), 
+    panel.border = element_blank(), #element_rect(color = greys[4], fill = NA), 
     axis.title = element_blank(), 
     legend.background = element_rect(fill = NA), 
     legend.text = element_text(size = 7), 
     legend.title = element_text(face = "bold", size = 9, margin = margin(b = 2)), 
+  ),
+  guides(
+    fill = guide_colorbar(
+      title.position = "top",
+      direction = "horizontal", 
+      barheight = 0.4,
+      barwidth = 3
+    )
   )
 )
 
@@ -183,18 +193,34 @@ list_clade_maps <- map(
       plot_theme = my_theme
     )
    
-    reposition_legend(plot_map, "bottom left", offset = 0.01, plot = F)
+    reposition_legend(  plot_map,
+                        x = 0.875, y = 0.075, 
+                        just = "center", 
+                        offset = 0.02,
+                        plot = F)
   }
 )
 
-chart_clade_richness <-
-  patchwork::wrap_plots(list_clade_maps, 
-                      nrow = 5, ncol = 2) +
-  patchwork::plot_annotation(tag_levels = "A", tag_suffix = ")")
+# chart_clade_richness <-
+#   patchwork::wrap_plots(list_clade_maps, 
+#                       nrow = 5, ncol = 2) +
+#   patchwork::plot_annotation(tag_levels = "A", tag_suffix = ")")
 
-ggsave(
-  here("output", "fig", "s1_clade_richness.png"), 
-  chart_clade_richness, 
-  width = 10,
-  height = 20
-)
+# ggsave(
+#   here("output", "fig", "s1_clade_richness.png"), 
+#   chart_clade_richness, 
+#   width = 10,
+#   height = 20
+# )
+
+# save maps ----
+for(i in seq_along(list_clade_maps)){
+  ggsave(
+    here("output", "fig", "clade_richness", glue("{LETTERS[i]}_clade_richness.png")), 
+    list_clade_maps[[i]], 
+    width = 5,
+    height = 5,
+    bg = "transparent"
+  )
+}
+

@@ -19,7 +19,7 @@ geog.path <- here(
   "output", "biogeobears", "spp_area", "000_areas_myrcia_phy_consensus.data"
   )
 
-max_range_size = 4
+max_range_size = 2
 num_cores_to_use = 3
 
 l_biogeo_mod <- model_biogeobears(
@@ -71,50 +71,9 @@ png(
 )
 
 plot_BioGeoBEARS_results(
-  l_biogeo_mod$resBAYAREALIKEj
+  l_biogeo_mod$resDECj
 )
+
 dev.off()
-
-
-get_node_range_BioGeoBEARS_v2(l_biogeo_mod$resBAYAREALIKEj)
-
-
-geogfn <- l_biogeo_mod$resBAYAREALIKEj$inputs$geogfn
-max_range_size <- l_biogeo_mod$resBAYAREALIKEj$inputs$max_range_size
-include_null_range <- l_biogeo_mod$resBAYAREALIKEj$inputs$include_null_range
-
-relprobs_matrix <- l_biogeo_mod$resBAYAREALIKEj$ML_marginal_prob_each_state_at_branch_top_AT_node
-
-
-tipranges = getranges_from_LagrangePHYLIP(lgdata_fn=geogfn)
-areas = getareas_from_tipranges_object(tipranges)
-
-statenames = areas_list_to_states_list_new(areas, 
-                                           maxareas = max_range_size, 
-                                           include_null_range = include_null_range, 
-                                           split_ABC = FALSE)
-
-
-MLstates = get_ML_states_from_relprobs(relprobs_matrix, 
-                                       statenames, 
-                                       returnwhat = "states")
-
-n_sp <- nrow(tipranges@df)
-
-png(
-  filename = "output/fig/plot_ancstates_rascunho.png",
-  height = 1400,
-  width = 700, 
-  units = "px"
-  
-)
-plot(myrcia_tree, cex = 0.5)
-nodelabels(MLstates[-c(1:n_sp)], cex = 0.5)
-tiplabels(MLstates[c(1:n_sp)], cex = 0.5)
-axisPhylo()
-dev.off()
-
-
-
 
 

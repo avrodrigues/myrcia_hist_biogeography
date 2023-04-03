@@ -9,9 +9,9 @@ library(ggplot2)
 
 # load data ---------------------------------------------------------------
 
-myrcia_dist <- readRDS(
-  here("data", "distribution", "list_myrcia_binary_df_05_degree.rds")
-)[[3]]
+myrcia_dist <- read.csv(
+  here("data", "distribution", "myrcia_binary_df_05_degree.csv")
+)
 
 
 # |- continent and limits ----
@@ -35,6 +35,7 @@ blue_gold_red <- c(
   "#c62f22"
   
 )
+
 blue_gold_red_2 <- c(
   "#363870",
   "#589eab",
@@ -42,6 +43,14 @@ blue_gold_red_2 <- c(
   "#362401",
   "#cb3b2e",
   "#f9c0c2"
+)
+
+colors_evo <-  c(
+  "#363870",
+  "#589eab",
+  "#d3a838",
+  "#362401",
+  "#BB4455"
 )
 
 greys <- c(

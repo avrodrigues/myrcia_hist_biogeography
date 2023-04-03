@@ -18,7 +18,7 @@ geog.path <- here("output", "biogeobears", "spp_area") |>
   list.files(pattern = "posterior", full.names = T)
 
 max_range_size = 4
-num_cores_to_use = 8
+num_cores_to_use = 3
 
 
 # run with optmx ----------------------------------------------------------
@@ -50,3 +50,9 @@ l_biogeo_mod <- model_biogeobears_test(
 end_gensa <- Sys.time()
 
 time_spend_gensa <- end_gensa - start_gensa
+
+
+# # compare runinngs ------------------------------------------------------
+
+((time_spend_optimx * 6) * 200)/60/60
+((time_spend_gensa * 6) * 200)/60

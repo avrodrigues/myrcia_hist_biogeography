@@ -9,8 +9,8 @@ library(taxize)
 # load data ---------------------------------------------------------------
 
 # species names
-myrcia_binary_df <- read_rds(
-  here("data", "distribution", "myrcia_binary_df_05_degree.rds")
+myrcia_binary_df <- read.csv(
+  here("data", "distribution", "myrcia_binary_df_05_degree.csv")
   )
 
 names_distribution <- 
