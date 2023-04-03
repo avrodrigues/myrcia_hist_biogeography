@@ -57,7 +57,7 @@
 #' @examples
 #' 
 
-evoregions <- function(comm, 
+evoregions2 <- function(comm, 
                        phy, 
                        max.n.clust = NULL,
                        max.n.clust.method = "elbow",
@@ -128,17 +128,37 @@ evoregions <- function(comm,
                                             max.n.clust = max.n.clust)
   list_res <- vector(mode = "list", length = 2)
   
+  if(method.clust == "ward"){
+    k = length(clust.vec.bray$size)
+    #compute pca 
+    maxRank <- min(dim(vec.bray[, 1:thresh.bray]))
+    pca <- ade4::dudi.pca(vec.bray[, 1:thresh.bray], center = TRUE, scale = TRUE, scannf = FALSE, nf=maxRank)
+    pca_axis <- pca$li
+    
+    ward_cluster <- hclust(dist(pca_axis)^2, "ward.D2")
+    
+  }
   
   list_res[[1]] <- list(
     vectors = vec.bray,
     prop_explainded = values.bray[,2],
     tresh_dist = tresh.dist
   )
-  list_res[[2]] <- clust.vec.bray
+  
+  list_res[[2]] <- clust.vec.bray$grp
+  
+  if(method.clust == "ward"){
+    list_res[[3]] <- ward_cluster
+  }
+  
+  else{
+    list_res[[3]] <- NULL
+  }
   
   
   names(list_res) <- c("PCPS", 
-                       "Cluster_Evoregions")
+                       "Cluster_Evoregions", 
+                       "Dendrogram")
   
   class(list_res) <- "evoregion"
   return(list_res)

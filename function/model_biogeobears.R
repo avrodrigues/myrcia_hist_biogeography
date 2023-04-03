@@ -14,6 +14,7 @@ model_biogeobears <- function(
   
 # SETUP -- libraries/BioGeoBEARS updates ----
 # Load the package (after installation, see above).
+  require(optimx)
   require(GenSA)    # GenSA is better than optimx (although somewhat slower)
   require(FD)       # for FD::maxent() (make sure this is up-to-date)
   #require(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)
@@ -70,7 +71,7 @@ BioGeoBEARS_run_object$include_null_range = TRUE    # set to FALSE for e.g. DEC*
 # Speed options and multicore processing if desired
 BioGeoBEARS_run_object$on_NaN_error = -1e50    # returns very low lnL if parameters produce NaN error (underflow check)
 BioGeoBEARS_run_object$speedup = TRUE          # shorcuts to speed ML search; use FALSE if worried (e.g. >3 params)
-BioGeoBEARS_run_object$use_optimx = "GenSA"    # if FALSE, use optim() instead of optimx()
+BioGeoBEARS_run_object$use_optimx = TRUE   # if FALSE, use optim() instead of optimx()
 BioGeoBEARS_run_object$num_cores_to_use = num_cores_to_use
 # (use more cores to speed it up; this requires
 # library(parallel) and/or library(snow). The package "parallel" 
@@ -149,7 +150,7 @@ BioGeoBEARS_run_object$include_null_range = TRUE    # set to FALSE for e.g. DEC*
 # Speed options and multicore processing if desired
 BioGeoBEARS_run_object$on_NaN_error = -1e50    # returns very low lnL if parameters produce NaN error (underflow check)
 BioGeoBEARS_run_object$speedup = TRUE          # shorcuts to speed ML search; use FALSE if worried (e.g. >3 params)
-BioGeoBEARS_run_object$use_optimx = "GenSA"    # if FALSE, use optim() instead of optimx()
+BioGeoBEARS_run_object$use_optimx = TRUE    # if FALSE, use optim() instead of optimx()
 BioGeoBEARS_run_object$num_cores_to_use = num_cores_to_use
 BioGeoBEARS_run_object$force_sparse = FALSE    # force_sparse=TRUE causes pathology & isn't much faster at this scale
 
@@ -215,7 +216,7 @@ BioGeoBEARS_run_object$include_null_range = TRUE    # set to FALSE for e.g. DEC*
 # Speed options and multicore processing if desired
 BioGeoBEARS_run_object$on_NaN_error = -1e50    # returns very low lnL if parameters produce NaN error (underflow check)
 BioGeoBEARS_run_object$speedup = TRUE          # shorcuts to speed ML search; use FALSE if worried (e.g. >3 params)
-BioGeoBEARS_run_object$use_optimx = "GenSA"    # if FALSE, use optim() instead of optimx()
+BioGeoBEARS_run_object$use_optimx = TRUE    # if FALSE, use optim() instead of optimx()
 BioGeoBEARS_run_object$num_cores_to_use = num_cores_to_use
 BioGeoBEARS_run_object$force_sparse = FALSE    # force_sparse=TRUE causes pathology & isn't much faster at this scale
 
@@ -286,7 +287,7 @@ BioGeoBEARS_run_object$include_null_range = TRUE    # set to FALSE for e.g. DEC*
 # Speed options and multicore processing if desired
 BioGeoBEARS_run_object$on_NaN_error = -1e50    # returns very low lnL if parameters produce NaN error (underflow check)
 BioGeoBEARS_run_object$speedup = TRUE          # shorcuts to speed ML search; use FALSE if worried (e.g. >3 params)
-BioGeoBEARS_run_object$use_optimx = "GenSA"    # if FALSE, use optim() instead of optimx()
+BioGeoBEARS_run_object$use_optimx = TRUE    # if FALSE, use optim() instead of optimx()
 BioGeoBEARS_run_object$num_cores_to_use = num_cores_to_use
 BioGeoBEARS_run_object$force_sparse = FALSE    # force_sparse=TRUE causes pathology & isn't much faster at this scale
 
@@ -376,7 +377,7 @@ BioGeoBEARS_run_object$include_null_range = TRUE    # set to FALSE for e.g. DEC*
 # Speed options and multicore processing if desired
 BioGeoBEARS_run_object$on_NaN_error = -1e50    # returns very low lnL if parameters produce NaN error (underflow check)
 BioGeoBEARS_run_object$speedup = TRUE          # shorcuts to speed ML search; use FALSE if worried (e.g. >3 params)
-BioGeoBEARS_run_object$use_optimx = "GenSA"    # if FALSE, use optim() instead of optimx()
+BioGeoBEARS_run_object$use_optimx = TRUE    # if FALSE, use optim() instead of optimx()
 BioGeoBEARS_run_object$num_cores_to_use = num_cores_to_use
 BioGeoBEARS_run_object$force_sparse = FALSE    # force_sparse=TRUE causes pathology & isn't much faster at this scale
 
@@ -453,7 +454,7 @@ BioGeoBEARS_run_object$include_null_range = TRUE    # set to FALSE for e.g. DEC*
 # Speed options and multicore processing if desired
 BioGeoBEARS_run_object$on_NaN_error = -1e50    # returns very low lnL if parameters produce NaN error (underflow check)
 BioGeoBEARS_run_object$speedup = TRUE          # shorcuts to speed ML search; use FALSE if worried (e.g. >3 params)
-BioGeoBEARS_run_object$use_optimx = "GenSA"
+BioGeoBEARS_run_object$use_optimx = TRUE
 BioGeoBEARS_run_object$num_cores_to_use = num_cores_to_use
 BioGeoBEARS_run_object$force_sparse = FALSE    # force_sparse=TRUE causes pathology & isn't much faster at this scale
 

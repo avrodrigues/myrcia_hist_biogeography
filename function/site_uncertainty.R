@@ -1,12 +1,13 @@
-#' Calcualtes the uncetainty of evoregion classification for each site based in
+#' Calculates the uncetainty of evoregion classification for each site based in
 #' multiple phylogenies
 #'
 #' @param evo_mtx a matrix with the evoregion classification for each site. Site 
 #'   in rows, classification from each phylogeny in columns
 #' 
-#' @value a vector with the uncertainty
+#' @value a vector with the phylogenetic uncertainty for each site
 
 site_uncertainty <- function(evo_mtx){
+  
   site_sim <- matrix(NA, nrow(evo_mtx), ncol(evo_mtx))
   site_uncertainty <- numeric(nrow(evo_mtx))
   
