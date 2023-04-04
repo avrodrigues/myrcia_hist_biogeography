@@ -8,7 +8,7 @@ l.func <- list.files(here("function"), full.names = T)
 map(l.func, source)
 
 
-# ancentral darea reconstruction -------------------------------------------
+# ancentral area reconstruction -------------------------------------------
 
 phy.path <- here(
   "data", "phylogeny", "phy_cleaned", "000_phy_myrcia_cleaned_consensus.new"

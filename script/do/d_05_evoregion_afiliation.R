@@ -27,7 +27,7 @@ PCPS_thresh <- regions$PCPS$vectors[, axis_sel]
 dist_phylo_PCPS <- vegan::vegdist(PCPS_thresh, method = "euclidean")
 
 # calculating affiliation values for each assemblage 
-afi <- affiliation_evoreg(phylo.comp.dist = dist_phylo_PCPS,
+afi <- calc_affiliation_evoreg(phylo.comp.dist = dist_phylo_PCPS,
                           groups = regions$Cluster_Evoregions) 
 
 saveRDS(

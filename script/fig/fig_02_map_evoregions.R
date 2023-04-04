@@ -114,7 +114,15 @@ ggplot() +
 
 # |-- relationship among evoregions ----
 
-dendro_plot <-  ggtree(dendro_evo) +
+dendro_df <- ggtree(dendro_evo)
+
+dendro_df <- 
+  dendro_df$data |> 
+  mutate(
+    x = ifelse(isTip, 0, x)
+  )
+
+dendro_plot <-  ggtree(den_df) +
   layout_dendrogram() +
   geom_label(
     aes(x = x, y = y, 
@@ -132,12 +140,12 @@ dendro_plot <-  ggtree(dendro_evo) +
     plot.background = element_rect(fill = NA, color = greys[5]),
     panel.background = element_rect(fill = NA, colour = NA))
 
-dendro_plot <- ggtree::flip(tree_plot, 5, 7)
+dendro_plot <- ggtree::flip(dendro_plot, 5, 7)
 
 # |-- Evoregion chart
 
 chart_evo_dendro <- map_evo_consensus +
-  inset_element(ggtree::flip(tree_plot, 5, 7),
+  inset_element(dendro_plot,
                 clip = F,
                 0.025, 0.025, 0.3, 0.35) +
   plot_annotation(tag_levels = "A")

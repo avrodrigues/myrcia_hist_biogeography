@@ -11,6 +11,7 @@ library(rcartocolor)
 library(lemon)
 library(ggtext)
 library(glue)
+library(plotly)
 
 l.func <- list.files(here("function"), full.names = T)
 map(l.func, source)
@@ -23,7 +24,7 @@ sf_countries <- ne_countries(scale = 50, returnclass = "sf")
 sf_evoregion <- readRDS(here("output", "evoregion", "sf_evoregion.rds"))
 
 # |- occ data ----
-myrcia_occ <- readRDS("data/distribution/list_myrcia_binary_df_05_degree.rds")[[3]]
+myrcia_occ <- read.csv("data/distribution/myrcia_binary_df_05_degree.csv")
 
 # |- phy ----
 phy.path <- here(
@@ -44,6 +45,8 @@ l_biogeo_mod <- readRDS(
        "list_results_models_biogeobears_phy_consenso.rds")
 )
 
+max_range_size <- l_biogeo_mod$resBAYAREALIKEj$inputs$max_range_size
+
 # |- areas for nodes ----
 areas_node <- 
   get_node_range_BioGeoBEARS(
@@ -54,30 +57,6 @@ areas_node <-
   )
 
 # Figure -----------------------------------------------------
-
-# |- set range colors ----
-
-range_cols  <- 
-  c( 
-    "A" = "#37396C",
-    "AB" = "#496B8E",
-    "B" = "#58A0A9", 
-    
-    "ABCE" = "#72934A",
-    "BCE" = "#9FC077",
-    "CE" = "#FFB545",
-    "C" = "#D3A838",
-    
-    "AE" = "#8F348A",
-    "ABE" = "#B459AF",
-    "BE" =  "#E589B6",
-    
-    "ABDE" = "#734358",
-    "BDE" =  "#855573",
-    
-    "DE" = "#8F2400",
-    "E" = "#CD3B2E"
-  )
 
 carto_names <- cartocolors %>% 
   filter(Type == "quantitative") %>% 
@@ -149,6 +128,9 @@ tree_df <- tree_df %>%
 myrcia_tree_df <- generate_tree_df(myrcia_tree) %>% 
   left_join(tree_df %>% select(-label)) 
 
+# this function was used together with the figure 03 to find for the node number of
+# each section (clade) in this phylogeny
+
 interactive_phy(myrcia_tree_df)
 
 clade_names_df <- tribble(
@@ -157,7 +139,7 @@ clade_names_df <- tribble(
   127, "Aguava",
   136, "Eugeniopsis",
   141, "Tomentosae",
-  #102, "Gomideia + Agauva + Eugeniopsis + Tomentosae",
+  #102, "Gomideia + Aguava + Eugeniopsis + Tomentosae",
   142, "Clade 10",
   144, "Calyptramthes",
   153, "Sympodiomyrcia",

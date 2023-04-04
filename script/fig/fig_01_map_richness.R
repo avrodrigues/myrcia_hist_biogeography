@@ -6,6 +6,7 @@ library(here)
 library(patchwork)
 library(rcartocolor)
 library(sf)
+library(ape)
 
 
 # load local functions
@@ -45,7 +46,23 @@ ggplot() +
   theme(
     legend.background = element_rect(fill = NA)
   ) 
+
 map_rich <- lemon::reposition_legend(map_richness, "bottom left", offset = 0.01)
+
+
+# save map richness -------------------------------------------------------
+
+ggsave(
+  here("output", "fig", "01_map_richness.png"), 
+  map_rich, 
+  width = 5,
+  height = 5
+)
+
+
+
+# comparing all data and only species in phylogeny ------------------------
+
 
 mycia_clade_df <- select_clade(myrcia_tree_df, 97)
 
@@ -66,7 +83,7 @@ chart_richness <- wrap_plots(
   patchwork::plot_annotation(tag_levels = "A", tag_suffix = ")")
 
 ggsave(
-  here("output", "fig", "01_chart_richness.png"), 
+  here("output", "fig", "01_1_chart_richness.png"), 
   chart_richness, 
   width = 10,
   height = 5

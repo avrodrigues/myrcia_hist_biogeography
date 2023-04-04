@@ -88,23 +88,21 @@ range_cols  <-
     "E" = "#BB4455",
     
     "AB" = "#5A7C9F",
-    #"ABC" = "#3B975D",
-    #"AC" = "#4D7D38",
+
     "BC" =  "#3B975D",
-    #"BCD" = "#75794B",
-    #"BCE" = "#E4938F",
-    
+
     "W" = "grey50"
   )
 
-#show_colors(range_cols)
+tree_df$area <- factor(tree_df$area, levels = c("A", "B", "C", "D", "E", "AB", "BC", "W"))
 
 (g <-
   ggtree(
     tree_df, 
     layout = "rect",
-    aes(x = x, color=parent_area), 
-    size = 2
+    aes(x = x, color= parent_area), 
+    size = 2,
+    show.legend = F
   )  +
   geom_tiplab(
     color = "#202015", 

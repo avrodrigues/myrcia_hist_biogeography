@@ -19,11 +19,7 @@ myrcia_comp <- read.csv(here("data", "W.csv"))
 
 # define species areas ----------------------------------------------------
 
-# l_spp_area <- vector("list", ncol(evo_mtx))
-# names(l_spp_area) <- names(evo_mtx)
-  
-# for(phy in 1:ncol(evo_mtx)){
-  
+
   area_names <- unique(evo_mtx)
   area_names <- area_names[order(area_names)]
   
@@ -49,8 +45,6 @@ myrcia_comp <- read.csv(here("data", "W.csv"))
   }
 
   
-#   l_spp_area[[phy]] <- phy_area_mtx
-# }
 
   phy_area_mtx <-
   phy_area_mtx %>%
@@ -63,36 +57,16 @@ myrcia_comp <- read.csv(here("data", "W.csv"))
 
 dir_save <- here("output", "biogeobears", "spp_area")
 
-# zero200 <- as.character(0:200 )
-# 
-# zero200_vec <- ifelse(
-#   nchar(zero200) == 1, 
-#   paste0("00", zero200), 
-#   ifelse(
-#     nchar(zero200) == 2, 
-#     paste0("0", zero200),
-#     zero200)
-# )
-# 
-# for(i in seq_along(zero200_vec)){
-#   if(i == 1){
-    area_mtx <- phy_area_mtx# l_spp_area[[i]]
-    filename <- paste0("000_areas_myrcia_phy_consensus.data")
-  # } else {
-  #   area_mtx <- l_spp_area[[i]]
-  #   filename <- paste0(
-  #     zero200_vec[i], "_areas_myrcia_phy_posterior_sampling.data"
-  #   )
-  # }
+area_mtx <- phy_area_mtx# l_spp_area[[i]]
+filename <- paste0("000_areas_myrcia_phy_consensus.data")
 
-  file_save <- here(dir_save, filename)
+file_save <- here(dir_save, filename)
   
-  tipranges_to_BioGeoBEARS(
+tipranges_to_BioGeoBEARS(
     area_mtx, 
    filename = file_save, 
    areanames = colnames(area_mtx)
   )
-#}
 
 
 
