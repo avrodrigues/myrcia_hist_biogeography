@@ -25,5 +25,5 @@ This repository is organized in four directories:
 `data` has the data sets used in the analysis  
 `scripts` has the scripts to make the cleaning, analysis and figures  
 `output` has the output from analysis steps and also the figures  
-`funciton` has the functions created for the analysis here  
+`function` has the functions created for the analysis here  
 
