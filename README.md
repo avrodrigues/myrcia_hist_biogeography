@@ -4,6 +4,8 @@
 # Historical biogeography for *Myrcia* genus
 
 <!-- badges: start -->
+
+[![DOI](https://zenodo.org/badge/491498590.svg)](https://zenodo.org/badge/latestdoi/491498590)
 <!-- badges: end -->
 
 Code and data for run the analysis of the project: Mapping *Myrcia*’s
