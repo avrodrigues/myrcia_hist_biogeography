@@ -122,7 +122,7 @@ dendro_df <-
     x = ifelse(isTip, 0, x)
   )
 
-dendro_plot <-  ggtree(den_df) +
+dendro_plot <-  ggtree(dendro_df) +
   layout_dendrogram() +
   geom_label(
     aes(x = x, y = y, 
@@ -159,6 +159,12 @@ ggsave(
 
 #|- affiliation ----
 
+
+evo_afi_df_xy |> 
+  ggplot(aes(x = as.factor(evoreg), y = evo_afiliation)) +
+  stat_halfeye()
+
+
 (map_evo_affiliation <- 
   ggplot(evo_afi_df_xy) +
   geom_raster(aes(x, y, fill = cat_afilliation)) +
@@ -174,7 +180,6 @@ ggsave(
   ) +
   theme_evoregions 
 )
-
 
 ggsave(
   here("output", "fig", "s1_site_affiliation.png"),

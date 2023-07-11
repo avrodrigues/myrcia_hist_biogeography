@@ -39,6 +39,10 @@ myrcia_comp <- read.csv(here("data", "W.csv"))
     areas <- table(evo_spp)
     areas_prop <- areas/sum(areas)
     areas_dist <- names(areas_prop)[which(areas_prop > 0.45)]
+    if(length(areas_dist) == 0) {
+      #areas_dist <- names(sort(areas_prop, decreasing = T)[1:2])
+      areas_dist <- names(areas_prop)[which(areas_prop > 0.25)]
+    }
     area_pos <- match(areas_dist, area_names)
     
     phy_area_mtx[sp, area_pos] <- 1
@@ -46,11 +50,11 @@ myrcia_comp <- read.csv(here("data", "W.csv"))
 
   
 
-  phy_area_mtx <-
-  phy_area_mtx %>%
-    as.data.frame %>%
-    mutate(W = ifelse(rowSums(phy_area_mtx) == 0, 1, 0)) %>%
-    as.matrix()
+# phy_area_mtx <-
+# phy_area_mtx %>%
+#   as.data.frame %>%
+#   mutate(W = ifelse(rowSums(phy_area_mtx) == 0, 1, 0)) %>%
+#   as.matrix()
 
 
 # save areas to biogeobears -----------------------------------------------

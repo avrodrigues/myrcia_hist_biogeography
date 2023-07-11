@@ -19,8 +19,8 @@ geog.path <- here(
   "output", "biogeobears", "spp_area", "000_areas_myrcia_phy_consensus.data"
   )
 
-max_range_size = 2
-num_cores_to_use = 3
+max_range_size = 3
+num_cores_to_use = 10
 
 l_biogeo_mod <- model_biogeobears(
     phy.path,
@@ -41,7 +41,7 @@ l_biogeo_mod$table_AICc %>%
 
 areas_node <- 
 get_node_range_BioGeoBEARS(
-  l_biogeo_mod$resBAYAREALIKEj,
+  l_biogeo_mod$resDECj,
   geog.path,
   myrcia_tree,
   max_range_size
