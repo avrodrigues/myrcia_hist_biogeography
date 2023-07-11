@@ -15,7 +15,7 @@ path_evo_consensus <- here(
 )
 
 evo_consensus <- readRDS(path_evo_consensus)
-evoregions_grp <- evo_consensus$Cluster_Evoregions
+evoregions_grp <- evo_consensus$cluster_evoregions
 
 # |- defining the reference names for evoregions
 pcps_vsc_thr <- evo_consensus$PCPS$vectors[,1:3]
@@ -29,7 +29,7 @@ k_grps_df %>%
   hclust("ward.D2") %>% 
   plot(hang = -1)
 
-evo_names <- c("E", "C", "D", "B", "A")
+evo_names <- c("D", "B", "E", "A", "C")
 evo_gr_names <- evo_names[evoregions_grp] %>%  as.factor()
 
 
@@ -48,7 +48,7 @@ evo_ref_df %>%
   ggplot(aes(x, y, fill = phy_con)) +
   geom_raster(show.legend = T) +
   scale_fill_manual(
-    values = blue_gold_red_2[c(2,1,3,5,4)]
+    values = blue_gold_red_2[]
   ) +
   labs(title = "Evoregions") +
   coord_equal() +

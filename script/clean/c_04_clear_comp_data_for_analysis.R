@@ -22,7 +22,7 @@ keep_site_3sp <- rowSums(myrcia_phy_comp) >= 3
 m_comp <- myrcia_phy_comp %>% filter(keep_site_3sp)
 write.csv(m_comp, here("data", "W.csv"), row.names = F)
 
-# geographycal coordinates
+# geographical coordinates
 
 site_xy <- myrcia_phy_site_xy %>% filter(keep_site_3sp)
 write.csv(site_xy, here("data", "W_xy.csv"), row.names = F)

@@ -36,14 +36,14 @@ pcps_vectors <- pcps_res$vectors
 n_max_evoreg <- find_max_nclust(
   pcps_vectors, 
   threshold = num_axis, 
-  nperm = 1000,
+  nperm = 100,
   max.nclust = c(8, 10, 12, 14),
   subset = round(nrow(pcps_vectors)*0.1),
   confidence.level = 0.95
   )
 
 #|- consensus phylogeny ----
-l_evo_consensus <- evoregions(
+l_evo_consensus <- calc_evoregions(
   comp_W, 
   myrcia_tree_consensus, 
   max.n.clust = 8
