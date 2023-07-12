@@ -45,12 +45,12 @@ l_biogeo_mod <- readRDS(
        "list_results_models_biogeobears_phy_consenso.rds")
 )
 
-max_range_size <- l_biogeo_mod$resBAYAREALIKEj$inputs$max_range_size
+max_range_size <- l_biogeo_mod$resDECj$inputs$max_range_size
 
 # |- areas for nodes ----
 areas_node <- 
   get_node_range_BioGeoBEARS(
-    l_biogeo_mod$resBAYAREALIKEj,
+    l_biogeo_mod$resDECj,
     geog.path,
     myrcia_tree,
     max_range_size
@@ -139,7 +139,6 @@ clade_names_df <- tribble(
   127, "Aguava",
   136, "Eugeniopsis",
   141, "Tomentosae",
-  #102, "Gomideia + Aguava + Eugeniopsis + Tomentosae",
   142, "Clade 10",
   144, "Calyptramthes",
   153, "Sympodiomyrcia",

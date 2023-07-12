@@ -82,7 +82,6 @@ dendro_evo <- dist_mtx %>%
   hclust("ward.D2") %>% 
   as.dendrogram() 
 
-
 # evoregions map ----------------------------------------------------------
 
 # |- consensus ----
@@ -158,11 +157,6 @@ ggsave(
 )
 
 #|- affiliation ----
-
-
-evo_afi_df_xy |> 
-  ggplot(aes(x = as.factor(evoreg), y = evo_afiliation)) +
-  stat_halfeye()
 
 
 (map_evo_affiliation <- 

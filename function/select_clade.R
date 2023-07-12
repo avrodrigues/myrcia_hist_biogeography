@@ -37,7 +37,8 @@ select_clade <- function(tree_df, node_number){
           return(tree_df %>% filter(node == root_node) %>% pull(node_selected))
         }
         parent(tree_df, x) %>% 
-          pull(node_selected)
+          pull(node_selected) %>%
+          as.character()
       })
     )
   

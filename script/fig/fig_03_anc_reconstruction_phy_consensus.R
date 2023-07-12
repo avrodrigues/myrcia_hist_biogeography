@@ -10,8 +10,8 @@ library(rnaturalearth)
 l.func <- list.files(here("function"), full.names = T)
 map(l.func, source)
 
-source("../Shiny/map_clade_richness/R/functions.R")
-source("../Shiny/map_clade_richness/R/gg_map_clade_richness.R")
+# source("../Shiny/map_clade_richness/R/functions.R")
+# source("../Shiny/map_clade_richness/R/gg_map_clade_richness.R")
 
 
 
@@ -39,9 +39,9 @@ l_biogeo_mod <- readRDS(
 # best model 
 l_biogeo_mod$table_AICc %>% 
   dplyr::arrange(AICc) %>% 
-  mutate(delta_AICc =  AICc - min(AICc))
+  mutate(delta_AICc =  AICc - min(AICc)) 
 
-max_range_size = 2
+max_range_size = 3
 # |- areas for nodes ----
 areas_node <- 
   get_node_range_BioGeoBEARS(
@@ -89,12 +89,12 @@ range_cols  <-
     
     "AB" = "#5A7C9F",
 
-    "BC" =  "#3B975D",
-
-    "W" = "grey50"
+    "BC" =  "#90c5a4",
+    "BCD" = "#545c57",
+    "BCE" =  "#88975D"
   )
 
-tree_df$area <- factor(tree_df$area, levels = c("A", "B", "C", "D", "E", "AB", "BC", "W"))
+tree_df$area <- factor(tree_df$area, levels = unique(tree_df$area))
 
 (g <-
   ggtree(
@@ -119,8 +119,8 @@ tree_df$area <- factor(tree_df$area, levels = c("A", "B", "C", "D", "E", "AB", "
     size = 2.5, 
     fontface = 2
   ) +
-  scale_fill_manual(name = "Areas", values = range_cols) +
-  scale_color_manual(name = "Areas", values = range_cols) +
+  scale_fill_manual(name = "Ranges", values = range_cols) +
+  scale_color_manual(name = "Ranges", values = range_cols) +
   scale_x_continuous(
     limits = c(-30, 5), 
     breaks = seq(-30, 5, 5), 
